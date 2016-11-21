@@ -14,7 +14,7 @@
 return array(
     'db' => array(
         'driver' => 'Pdo',
-        'dsn' => 'mysql:dbname=extranet2;host=localhost',
+        'dsn' => 'mysql:dbname=u723439948_data;host=localhost',
         'driver_options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
         ),
@@ -26,6 +26,8 @@ return array(
     ),
        'module_layouts' => array(
        'Application' => 'layout/home.phtml',
-           'Zarzadzanie' => 'layout/layout.phtml',
+       'Zarzadzanie' => 'layout/layout.phtml',
+       //'Termin' => 'layout/layout.phtml',
+           'Kadra' => 'layout/layout.phtml',
    ),
 );

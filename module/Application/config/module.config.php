@@ -63,7 +63,16 @@ return array(
                     ),
                 ),
             ),
-
+   'zmianahasla' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/zmianahasla',
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Index',
+                        'action' => 'zmianahasla',
+                    ),
+                ),
+            ),
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
             // module. Simply drop new controllers in, and you can access them
@@ -103,13 +112,13 @@ return array(
         'template_map' => array(
             'module_layouts' => array(
             'Application' => '/../view/layout/home.phtml',
-                'Uzytkownik'        => '/Application/view/layout/layout.phtml',
+               'Termin'        => '/Application/view/layout/layout.phtml',
         ),
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
             'application/index/index' => __DIR__ . '/../application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
-        ),
+        ), 
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),

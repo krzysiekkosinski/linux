@@ -108,11 +108,11 @@
 }
 </style>
         
-        <link href="<?= $this->basePath() . '/css/bootstrap.min.css'?>" rel="stylesheet">
-        <link href="<?= $this->basePath() . '/css/sb-admin-2.css'?>" rel="stylesheet">
-        <link href="<?= $this->basePath() . '/font-awesome/css/font-awesome.min.css'?>" rel="stylesheet" type="text/css"> 
-        <script src="<?= $this->basePath() . '/js/jquery.js'?>"></script>
-        <script src="<?= $this->basePath() . '/js/bootstrap.min.js'?>"></script>   
+        <link href="<?= $this->basePath() . '/public/css/bootstrap.min.css'?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/public/css/sb-admin-2.css'?>" rel="stylesheet">
+        <link href="<?= $this->basePath() . '/public/font-awesome/css/font-awesome.min.css'?>" rel="stylesheet" type="text/css"> 
+        <script src="<?= $this->basePath() . '/public/js/jquery.js'?>"></script>
+        <script src="<?= $this->basePath() . '/public/js/bootstrap.min.js'?>"></script>   
         <script type="text/javascript">
 	$(function() {
 
@@ -188,19 +188,22 @@
 								</form>
 								<form id="register-form" action="http://<?= $_SERVER['HTTP_HOST'] . $this->url('register'); ?>" method="post" role="form" style="display: none;">
 									<div class="form-group">
-										<input type="text" name="nazwisko" id="username" tabindex="1" class="form-control" placeholder="Nazwisko" value="">
+										<input type="text" name="Nazwisko" id="username" tabindex="1" class="form-control" placeholder="Nazwisko" value="">
 									</div>
                                                                         <div class="form-group">
-										<input type="text" name="imie" id="username" tabindex="1" class="form-control" placeholder="Imie" value="">
+										<input type="text" name="Imie" id="username" tabindex="1" class="form-control" placeholder="Imie" value="">
 									</div>
 									<div class="form-group">
-										<input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Adres email" value="">
+										<input type="email" name="Email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
+									</div>
+                                                                        <div class="form-group">
+										<input type="text" name="Login" id="username" tabindex="1" class="form-control" placeholder="Login" value="">
 									</div>
 									<div class="form-group">
-										<input type="password" name="hasło" id="password" tabindex="2" class="form-control" placeholder="Hasło">
+										<input type="password" name="Haslo" id="password" tabindex="2" class="form-control" placeholder="Hasło">
 									</div>
 									<div class="form-group">
-										<input type="password" name="powtórz hasło" id="confirm-password" tabindex="2" class="form-control" placeholder="Powtórz hasło">
+										<input type="password" name="Powtorz_haslo" id="confirm-password" tabindex="2" class="form-control" placeholder="Powtórz hasło">
 									</div>
 									<div class="form-group">
 										<div class="row">

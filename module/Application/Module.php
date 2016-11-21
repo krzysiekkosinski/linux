@@ -11,9 +11,15 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Application\Model\Uzytkownik;
+use Application\Model\UzytkownikTable;
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\ModuleManager\Feature\ServiceProviderInterface;
+use Zend\Db\ResultSet\ResultSet;
 
-
-class Module
+class Module implements AutoloaderProviderInterface, ConfigProviderInterface, ServiceProviderInterface
 {
     public function onBootstrap(MvcEvent $e)
     {
@@ -41,10 +47,32 @@ class Module
     public function getAutoloaderConfig()
     {
         return array(
+            'Zend\Loader\ClassMapAutoloader' => array(
+                __DIR__ . '/autoload_classmap.php',
+            ),
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
+            ),
+        );
+    }
+    
+    public function getServiceConfig()
+    {
+        return array(
+            'factories' => array(
+                'Application\Model\UzytkownikTable' => function($sm) {
+                    $tableGateway = $sm->get('UzytkownikTableGateway');
+                    $table = new UzytkownikTable($tableGateway);
+                    return $table;
+                },
+                'UzytkownikTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Uzytkownik());
+                    return new TableGateway('dzialacz', $dbAdapter, null, $resultSetPrototype);
+                },
             ),
         );
     }
