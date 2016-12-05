@@ -5,9 +5,10 @@ return array(
         'Application',
         'Sprawozdanie',
         'Podglad',
-        'Zarzadzanie',
+        'Mecz',
         'Kadra',
         'Zawodnik',
+        'Sedzia',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

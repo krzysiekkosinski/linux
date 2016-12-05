@@ -88,7 +88,12 @@ class KadraController extends AbstractActionController {
                     'id_zespol' => $id,
                     'nazwa_zespolu' => addslashes(htmlspecialchars($_POST['Nazwa_zespolu'])),
                 );
-                if (!empty($_POST['Nazwa_zespolu'])) {
+                $czy_zmieniono = $this->Tabela()->wszystko(array('nazwa_zespolu' => $_POST['Nazwa_zespolu']));
+        $zlicz = $czy_zmieniono->count();
+                if ($zlicz>0||empty($_POST['Nazwa_zespolu'])) {
+                                        return $this->redirect()->toRoute('kadra', array('action' => "edytuj",'id' => $id));
+                }
+                else{
                         $kadra = new Kadra();
                         $kadra->exchangeArray($data);
                         $this->Tabela()->edytuj($kadra, $id);

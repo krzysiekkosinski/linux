@@ -50,4 +50,11 @@ class KadraTable
     public function usun($id_zespol) {
         $this->tableGateway->delete(array('id_zespol' => (int) $id_zespol));
     }
+    
+    public function nazwa_zespolu($id_zespol)
+    {
+        return $this->tableGateway->select(array('id_zespol' => (int) $id_zespol))->current()->nazwa_zespolu;
+    }
+    
+    
 }

@@ -5,7 +5,7 @@ namespace Zawodnik\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zawodnik\Model\Zawodnik;
-
+use Kadra\Model\Kadra;
 
 
 
@@ -14,21 +14,34 @@ class ZawodnikController extends AbstractActionController {
 
     
     protected $zawodnikTable;
+    protected $kadraTable;
 
-    
     public function listaAction() {
         $this->sesja();
         //$request = $this->getRequest();
-        $zawodnicy = $this->Tabela()->wszystko(null);
+         if($_SESSION['funkcja']=='dzialacz'){
+        $zawodnicy = $this->Tabela()->listadzialacza(array('id_zespol' => $_SESSION['id_zespol']));
+        }
+        else $zawodnicy = $this->Tabela()->wszystko(null);
+        
+        $zaw_array = array();
+        
+        foreach ($zawodnicy as $zawodnik)
+        {
+            $zawodnik->id_zespol = $this->KadraTable()->nazwa_zespolu($zawodnik->id_zespol);
+            $zaw_array[] = $zawodnik;
+        }
 
         return new ViewModel(array(
-            'zawodnicy' => $zawodnicy,
+            'zawodnicy' => $zaw_array,
             'xxx' => $zawodnicy->Count()));
     }
+    
      
         public function dodajAction() {
         $this->sesja();
         $request = $this->getRequest();
+        $kluby = $this->KadraTable()->wszystko(null);
         if ($request->isPost()) {
             if (empty($_POST['Imie_zawodnika']) || empty($_POST['Nazwisko_zawodnika'])||empty($_POST['Data_ur'])) 
                 {
@@ -46,7 +59,7 @@ class ZawodnikController extends AbstractActionController {
                     'z_imie' => addslashes(htmlspecialchars($_POST['Imie_zawodnika'])),
                     'z_nazwisko' => addslashes(htmlspecialchars($_POST['Nazwisko_zawodnika'])),
                     'z_data_ur' => addslashes(htmlspecialchars($_POST['Data_ur'])),
-                    'id_zespol' => '1',
+                    'id_zespol' => (int) $_POST['Klub'],
                 );
                 $zawodnik = new Zawodnik();
                 $zawodnik->exchangeArray($data);
@@ -54,7 +67,7 @@ class ZawodnikController extends AbstractActionController {
                 return $this->redirect()->toRoute('zawodnik');
             }
         }
-        return new ViewModel();
+        return new ViewModel(array('kluby' => $kluby,));
     }
     
     public function edytujAction() {
@@ -72,6 +85,8 @@ class ZawodnikController extends AbstractActionController {
 
             if (!$request->isPost()) {
                 $zawodnicy = $this->Tabela()->wszystko(array('id_zawodnik' => $id));
+                
+                $kluby = $this->KadraTable()->wszystko(null);
 
                 if ($zawodnicy->Count() == 0) {
                     return $this->redirect()->toRoute('zawodnik');
@@ -89,16 +104,21 @@ class ZawodnikController extends AbstractActionController {
                             )
                     );
                 }
-                return new ViewModel(array('zawodnik' => $edytuj_zawodnika,));
+                return new ViewModel(array('zawodnik' => $edytuj_zawodnika, 'kluby' => $kluby,));
             } else {
+                
                 $data = array(
-                    'id_zawodnik' => "",
+                    'id_zawodnik' => $id,
                     'z_imie' => addslashes(htmlspecialchars($_POST['Imie_zawodnika'])),
                     'z_nazwisko' => addslashes(htmlspecialchars($_POST['Nazwisko_zawodnika'])),
                     'z_data_ur' => addslashes(htmlspecialchars($_POST['Data_ur'])),
-                    'id_zespol' => '1',
+                    'id_zespol' => (int) $_POST['Klub'],
                 );
-                if (!empty($_POST['Imie_zawodnika']) && !empty($_POST['Nazwisko_zawodnika'])&& !empty($_POST['Data_ur'])) {
+                $czy_zmieniono = $this->Tabela()->wszystko(array('z_imie' => $_POST['Imie_zawodnika'],'z_data_ur' => $_POST['Data_ur'],'id_zespol' => $_POST['Klub']));
+        $zlicz = $czy_zmieniono->count();
+                if ($zlicz>0||empty($_POST['Imie_zawodnika']) || empty($_POST['Nazwisko_zawodnika'])|| empty($_POST['Data_ur'])) {
+                    return $this->redirect()->toRoute('zawodnik', array('action' => "edytuj",'id' => $id));
+                }else{
                         $zawodnik = new Zawodnik();
                         $zawodnik->exchangeArray($data);
                         $this->Tabela()->edytuj($zawodnik, $id);
@@ -135,6 +155,14 @@ class ZawodnikController extends AbstractActionController {
         return $this->ZawodnikTable;
     }
     
+    public function KadraTable() {
+        if (!$this->KadraTable) {
+            $sm = $this->getServiceLocator();
+            $this->KadraTable = $sm->get('Kadra\Model\KadraTable');
+        }
+
+        return $this->KadraTable;
+    }
 
     private function sesja() {
         session_start();

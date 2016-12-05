@@ -6,13 +6,15 @@
  * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
-
+ 
 namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Application\Model\Uzytkownik;
 use Application\Model\UzytkownikTable;
+use Kadra\Model\Kadra;
+use Kadra\Model\KadraTable;
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\Db\TableGateway\TableGateway;
@@ -71,7 +73,18 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Se
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new Uzytkownik());
-                    return new TableGateway('dzialacz', $dbAdapter, null, $resultSetPrototype);
+                    return new TableGateway('uzytkownik', $dbAdapter, null, $resultSetPrototype);
+                },
+                'Kadra\Model\KadraTable' => function($sm) {
+                    $tableGateway = $sm->get('KadraTableGateway');
+                    $table = new KadraTable($tableGateway);
+                    return $table;
+                },
+                'KadraTableGateway' => function($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new Kadra());
+                    return new TableGateway('zespol', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );

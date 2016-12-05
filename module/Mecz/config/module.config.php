@@ -3,22 +3,22 @@
 return array(
     'controllers' => array(
         'invokables' => array(
-            'Zarzadzanie\Controller\Zarzadzanie' => 'Zarzadzanie\Controller\ZarzadzanieController',
+            'Mecz\Controller\Mecz' => 'Mecz\Controller\MeczController',
         ),
     ),
     'router' => array(
         'routes' => array(
-            'zarzadzanie' => array(
+            'mecz' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/zarzadzanie',
+                    'route' => '/mecz[/:action][/:id][/]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'Zarzadzanie\Controller\Zarzadzanie',
-                        'action' => 'index',
+                        'controller' => 'Mecz\Controller\Mecz',
+                        'action' => 'lista',
                     ),
                 ),
             ),
@@ -29,4 +29,5 @@ return array(
             __DIR__ . '/../view',
         ),
     ),
+    
 );

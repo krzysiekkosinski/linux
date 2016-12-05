@@ -1,13 +1,11 @@
 <?php
 
-namespace Zawodnik;
+namespace Mecz;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
-use Zawodnik\Model\Zawodnik;
-use Zawodnik\Model\ZawodnikTable;
-use Kadra\Model\Kadra;
-use Kadra\Model\KadraTable;
+use Mecz\Model\Mecz;
+use Mecz\Model\MeczTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\ModuleManager\Feature\ServiceProviderInterface;
@@ -32,27 +30,16 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface, Se
     {
         return array(
             'factories' => array(
-                'Zawodnik\Model\ZawodnikTable' => function($sm) {
-                    $tableGateway = $sm->get('ZawodnikTableGateway');
-                    $table = new ZawodnikTable($tableGateway);
+                'Mecz\Model\MeczTable' => function($sm) {
+                    $tableGateway = $sm->get('MeczTableGateway');
+                    $table = new MeczTable($tableGateway);
                     return $table;
                 },
-                'ZawodnikTableGateway' => function($sm) {
+                'MeczTableGateway' => function($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Zawodnik());
-                    return new TableGateway('zawodnik', $dbAdapter, null, $resultSetPrototype);
-                },
-                'Kadra\Model\KadraTable' => function($sm) {
-                    $tableGateway = $sm->get('KadraTableGateway');
-                    $table = new KadraTable($tableGateway);
-                    return $table;
-                },
-                'KadraTableGateway' => function($sm) {
-                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-                    $resultSetPrototype = new ResultSet();
-                    $resultSetPrototype->setArrayObjectPrototype(new Kadra());
-                    return new TableGateway('zespol', $dbAdapter, null, $resultSetPrototype);
+                    $resultSetPrototype->setArrayObjectPrototype(new Mecz());
+                    return new TableGateway('mecz', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );

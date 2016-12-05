@@ -21,12 +21,6 @@ class PodgladController extends AbstractActionController {
         }
     }
     
-    public function baza()
-    {
-        mysql_connect("localhost", "root", "root");
-        mysql_select_db("extranet2");
-        mysql_query("SET NAMES 'utf8'");
-    }
 
 
 }

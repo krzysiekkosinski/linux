@@ -5,26 +5,30 @@ namespace Application\Model;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
-
+ 
 class Uzytkownik
 {
-    public $id_dzialacz;
-    public $d_imie;
-    public $d_nazwisko;
-    public $d_login;
-    public $d_haslo;
-    public $d_mail;
+    public $id_uzytkownik;
+    public $u_imie;
+    public $u_nazwisko;
+    public $u_funkcja;
+    public $id_zespol;
+    public $u_login;
+    public $u_haslo;
+    public $u_mail;
     
     protected $inputFilter;
 
     public function exchangeArray($data)
     {
-        $this->id_dzialacz = (!empty($data['id_dzialacz'])) ? $data['id_dzialacz'] : null;
-        $this->d_imie = (!empty($data['d_imie'])) ? $data['d_imie'] : null;
-        $this->d_nazwisko = (!empty($data['d_nazwisko'])) ? $data['d_nazwisko'] : null;
-        $this->d_login = (!empty($data['d_login'])) ? $data['d_login'] : null;
-        $this->d_haslo = (!empty($data['d_haslo'])) ? $data['d_haslo'] : null;
-        $this->d_mail = (!empty($data['d_mail'])) ? $data['d_mail'] : null;
+        $this->id_uzytkownik = (!empty($data['id_uzytkownik'])) ? $data['id_uzytkownik'] : null;
+        $this->u_imie = (!empty($data['u_imie'])) ? $data['u_imie'] : null;
+        $this->u_nazwisko = (!empty($data['u_nazwisko'])) ? $data['u_nazwisko'] : null;
+        $this->u_funkcja = (!empty($data['u_funkcja'])) ? $data['u_funkcja'] : null;
+        $this->id_zespol = (!empty($data['id_zespol'])) ? $data['id_zespol'] : null;
+        $this->u_login = (!empty($data['u_login'])) ? $data['u_login'] : null;
+        $this->u_haslo = (!empty($data['u_haslo'])) ? $data['u_haslo'] : null;
+        $this->u_mail = (!empty($data['u_mail'])) ? $data['u_mail'] : null;
     }
     
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -39,7 +43,7 @@ class Uzytkownik
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
-                'name' => 'id_dzialacz',
+                'name' => 'id_uzytkownik',
                 'requird' => true,
                 'filtres' => array(
                     array(
@@ -49,7 +53,7 @@ class Uzytkownik
             ));
 
             $inputFilter->add(array(
-                'name' => 'd_imie',
+                'name' => 'u_nazwisko',
                 'requird' => true,
                 'validators' => array(
                      array(
@@ -71,7 +75,7 @@ class Uzytkownik
             ));
             
             $inputFilter->add(array(
-                'name' => 'd_nazwisko',
+                'name' => 'u_imie',
                 'requird' => true,
                 'validators' => array(
                      array(
@@ -91,9 +95,41 @@ class Uzytkownik
                 ),
                 
             ));
+            
+            $inputFilter->add(array(
+                'name' => 'u_funkcja',
+                'requird' => true,
+                'validators' => array(
+                     array(
+                         'name'    => 'StringLength',
+                         'options' => array(
+                             'encoding' => 'UTF-8',
+                             'min'      => 1,
+                             'max'      => 100,
+                         ),
+                     ),
+                 ),
+                'filtres' => array(
+                    array(
+                        array('name' => 'StripTags'),
+                        array('name' => 'StringTrim'),
+                    ),
+                ),
+                
+            ));
+            
+            $inputFilter->add(array(
+                'name' => 'id_uzytkownik',
+                'requird' => true,
+                'filtres' => array(
+                    array(
+                        'name' => 'Int',
+                    ),
+                ),
+            ));
 
             $inputFilter->add(array(
-                'name' => 'd_mail',
+                'name' => 'u_mail',
                 'requird' => true,
                 'type' => 'Zend\Form\Element\Email',
                 'filtres' => array(
@@ -116,7 +152,7 @@ class Uzytkownik
 
 
             $inputFilter->add(array(
-                'name' => 'd_login',
+                'name' => 'u_login',
                 'requird' => true,
                 'filtres' => array(
                     array(
@@ -136,7 +172,7 @@ class Uzytkownik
                  ),
             ));
             $inputFilter->add(array(
-                'name' => 'd_haslo',
+                'name' => 'u_haslo',
                 'requird' => true,
                 'filtres' => array(
                     array(

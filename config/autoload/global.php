@@ -26,8 +26,8 @@ return array(
     ),
        'module_layouts' => array(
        'Application' => 'layout/home.phtml',
-       'Zarzadzanie' => 'layout/layout.phtml',
-       //'Termin' => 'layout/layout.phtml',
+       'Mecz' => 'layout/layout.phtml',
            'Kadra' => 'layout/layout.phtml',
+           'Zawodnik' => 'layout/layout.phtml',
    ),
 );

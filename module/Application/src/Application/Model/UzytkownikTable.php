@@ -3,7 +3,7 @@
 namespace Application\Model;
 
 use Zend\Db\TableGateway\TableGateway;
-
+ 
 class UzytkownikTable
 {
     protected $tableGateway;
@@ -22,43 +22,57 @@ class UzytkownikTable
         $wynik = $this->tableGateway->select($tablica);
         return $wynik;
     }
+    
+    
  
     public function dodaj(Uzytkownik $uzytkownik)
     {
         $data = array(
-            'id_dzialacz' => $uzytkownik->id_dzialacz,
-            'd_imie' => $uzytkownik->d_imie,
-            'd_nazwisko' => $uzytkownik->d_nazwisko,
-            'd_login' => $uzytkownik->d_login,
-            'd_haslo' => $uzytkownik->d_haslo,
-            'd_mail' => $uzytkownik->d_mail,
+            'id_uzytkownik' => $uzytkownik->id_uzytkownik,
+            'u_imie' => $uzytkownik->u_imie,
+            'u_nazwisko' => $uzytkownik->u_nazwisko,
+            'u_funkcja' => $uzytkownik->u_funkcja,
+            'id_zespol' => $uzytkownik->id_zespol,
+            'u_login' => $uzytkownik->u_login,
+            'u_haslo' => $uzytkownik->u_haslo,
+            'u_mail' => $uzytkownik->u_mail,
         );
         
         $this->tableGateway->insert($data);
     }
     
-    public function edytuj(Uzytkownik $uzytkownik, $id_dzialacz) {
+    public function edytuj(Uzytkownik $uzytkownik, $id_uzytkownik) {
         $data = array(
-            'id_dzialacz' => $uzytkownik->id_dzialacz,
-            'd_imie' => $uzytkownik->d_imie,
-            'd_nazwisko' => $uzytkownik->d_nazwisko,
-            'd_login' => $uzytkownik->d_login,
-            'd_haslo' => $uzytkownik->d_haslo,
-            'd_mail' => $uzytkownik->d_mail,
+            'id_uzytkownik' => $uzytkownik->id_uzytkownik,
+            'u_imie' => $uzytkownik->u_imie,
+            'u_nazwisko' => $uzytkownik->u_nazwisko,
+            'u_funkcja' => $uzytkownik->u_funkcja,
+            'id_zespol' => $uzytkownik->id_zespol,
+            'u_login' => $uzytkownik->u_login,
+            'u_haslo' => $uzytkownik->u_haslo,
+            'u_mail' => $uzytkownik->u_mail,
 
         );
         
 
         
-        $id = (int) $data['id_dzialacz'];
-        if ($this->wszystko(array('id_dzialacz' => $id_dzialacz))->Count()) {
-                 $this->tableGateway->update($data,array('id_dzialacz' => $id_dzialacz));
+        $id = (int) $data['id_uzytkownik'];
+        if ($this->wszystko(array('id_uzytkownik' => $id_uzytkownik))->Count()) {
+                 $this->tableGateway->update($data,array('id_uzytkownik' => $id_uzytkownik));
              } else {
                  throw new \Exception('Użytkownik o tym id nie istnieje');
              }
     }
 
-    public function usun($id_dzialacz) {
-        $this->tableGateway->delete(array('id_dzialacz' => (int) $id_dzialacz));
+    public function usun($id_uzytkownik) {
+        $this->tableGateway->delete(array('id_uzytkownik' => (int) $id_uzytkownik));
+    }
+    
+    public function dane_sedziego($id_uzytkownik)
+    {
+        $nazwisko = $this->tableGateway->select(array('id_uzytkownik' => (int) $id_uzytkownik))->current()->u_nazwisko;
+        $imie = $this->tableGateway->select(array('id_uzytkownik' => (int) $id_uzytkownik))->current()->u_imie;
+        $nazwisko_imie = $nazwisko.' '.$imie;
+        return $nazwisko_imie;
     }
 }
