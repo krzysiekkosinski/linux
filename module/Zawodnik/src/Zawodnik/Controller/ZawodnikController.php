@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Zawodnik\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -7,50 +7,43 @@ use Zend\View\Model\ViewModel;
 use Zawodnik\Model\Zawodnik;
 use Kadra\Model\Kadra;
 
-
-
-
 class ZawodnikController extends AbstractActionController {
 
-    
     protected $zawodnikTable;
     protected $kadraTable;
 
+//akcja odpowiedzialna za wyświetlenie listy zawodników
     public function listaAction() {
         $this->sesja();
-        //$request = $this->getRequest();
-         if($_SESSION['funkcja']=='dzialacz'){
-        $zawodnicy = $this->Tabela()->listadzialacza(array('id_zespol' => $_SESSION['id_zespol']));
-        }
-        else $zawodnicy = $this->Tabela()->wszystko(null);
-        
+        if ($_SESSION['funkcja'] == 'dzialacz') {
+            $zawodnicy = $this->Tabela()->listadzialacza(array('id_zespol' => $_SESSION['id_zespol']));
+        } else
+            $zawodnicy = $this->Tabela()->wszystko(null);
+
         $zaw_array = array();
-        
-        foreach ($zawodnicy as $zawodnik)
-        {
+
+        foreach ($zawodnicy as $zawodnik) {
             $zawodnik->id_zespol = $this->KadraTable()->nazwa_zespolu($zawodnik->id_zespol);
             $zaw_array[] = $zawodnik;
         }
 
         return new ViewModel(array(
-            'zawodnicy' => $zaw_array,
-            'xxx' => $zawodnicy->Count()));
+            'zawodnicy' => $zaw_array));
     }
-    
-     
-        public function dodajAction() {
+
+//akcja odpowiedzialna za dodanie nowego zawodnika
+    public function dodajAction() {
         $this->sesja();
         $request = $this->getRequest();
         $kluby = $this->KadraTable()->wszystko(null);
         if ($request->isPost()) {
-            if (empty($_POST['Imie_zawodnika']) || empty($_POST['Nazwisko_zawodnika'])||empty($_POST['Data_ur'])) 
-                {
+            if (empty($_POST['Imie_zawodnika']) || empty($_POST['Nazwisko_zawodnika']) || empty($_POST['Data_ur'])) {
                 echo '<div class="alert alert-danger">Nie podałeś danych</div>';
                 return new ViewModel();
-            } 
-            $czy_jest_zawodnik = $this->Tabela()->wszystko(array('z_imie' => $_POST['Imie_zawodnika'],'z_nazwisko' => $_POST['Nazwisko_zawodnika'],'z_data_ur' => $_POST['Data_ur']));
-        $zlicz = $czy_jest_zawodnik->count();
-        if ($zlicz > 0) {
+            }
+            $czy_jest_zawodnik = $this->Tabela()->wszystko(array('z_imie' => $_POST['Imie_zawodnika'], 'z_nazwisko' => $_POST['Nazwisko_zawodnika'], 'z_data_ur' => $_POST['Data_ur']));
+            $zlicz = $czy_jest_zawodnik->count();
+            if ($zlicz > 0) {
                 echo '<div class="alert alert-danger">Podany zawodnik już jest w bazie</div>';
                 return new ViewModel();
             } else {
@@ -69,7 +62,8 @@ class ZawodnikController extends AbstractActionController {
         }
         return new ViewModel(array('kluby' => $kluby,));
     }
-    
+
+//akcja odpowiedzialna za edytowanie wybranego zawodnika
     public function edytujAction() {
         $this->sesja();
 
@@ -85,7 +79,7 @@ class ZawodnikController extends AbstractActionController {
 
             if (!$request->isPost()) {
                 $zawodnicy = $this->Tabela()->wszystko(array('id_zawodnik' => $id));
-                
+
                 $kluby = $this->KadraTable()->wszystko(null);
 
                 if ($zawodnicy->Count() == 0) {
@@ -106,7 +100,7 @@ class ZawodnikController extends AbstractActionController {
                 }
                 return new ViewModel(array('zawodnik' => $edytuj_zawodnika, 'kluby' => $kluby,));
             } else {
-                
+
                 $data = array(
                     'id_zawodnik' => $id,
                     'z_imie' => addslashes(htmlspecialchars($_POST['Imie_zawodnika'])),
@@ -114,24 +108,25 @@ class ZawodnikController extends AbstractActionController {
                     'z_data_ur' => addslashes(htmlspecialchars($_POST['Data_ur'])),
                     'id_zespol' => (int) $_POST['Klub'],
                 );
-                $czy_zmieniono = $this->Tabela()->wszystko(array('z_imie' => $_POST['Imie_zawodnika'],'z_data_ur' => $_POST['Data_ur'],'id_zespol' => $_POST['Klub']));
-        $zlicz = $czy_zmieniono->count();
-                if ($zlicz>0||empty($_POST['Imie_zawodnika']) || empty($_POST['Nazwisko_zawodnika'])|| empty($_POST['Data_ur'])) {
-                    return $this->redirect()->toRoute('zawodnik', array('action' => "edytuj",'id' => $id));
-                }else{
-                        $zawodnik = new Zawodnik();
-                        $zawodnik->exchangeArray($data);
-                        $this->Tabela()->edytuj($zawodnik, $id);
-                        return $this->redirect()->toRoute('zawodnik');
-                    }
+                $czy_zmieniono = $this->Tabela()->wszystko(array('z_imie' => $_POST['Imie_zawodnika'], 'z_data_ur' => $_POST['Data_ur'], 'id_zespol' => $_POST['Klub']));
+                $zlicz = $czy_zmieniono->count();
+                if ($zlicz > 0 || empty($_POST['Imie_zawodnika']) || empty($_POST['Nazwisko_zawodnika']) || empty($_POST['Data_ur'])) {
+                    return $this->redirect()->toRoute('zawodnik', array('action' => "edytuj", 'id' => $id));
+                } else {
+                    $zawodnik = new Zawodnik();
+                    $zawodnik->exchangeArray($data);
+                    $this->Tabela()->edytuj($zawodnik, $id);
+                    return $this->redirect()->toRoute('zawodnik');
                 }
             }
-        
+        }
+
         return new ViewModel();
     }
-    
-     public function usunAction() {
-        
+
+//akcja odpowiedzialna za usunięcie wybranego zawodnika
+    public function usunAction() {
+
         $id = $this->params('id', 0);
 
         $id_array = explode(',', $id);
@@ -140,12 +135,11 @@ class ZawodnikController extends AbstractActionController {
             $zawodnicy = $this->Tabela()->wszystko(array('id_zawodnik' => $id));
 
             $this->Tabela()->usun($id);
-
         }
         return $this->redirect()->toRoute('zawodnik');
     }
-    
-    
+
+//funkcja dostępu do tabeli z zawodnikami
     public function Tabela() {
         if (!$this->ZawodnikTable) {
             $sm = $this->getServiceLocator();
@@ -155,6 +149,7 @@ class ZawodnikController extends AbstractActionController {
         return $this->ZawodnikTable;
     }
     
+//funkcja dostępu do tabeli z zespołami
     public function KadraTable() {
         if (!$this->KadraTable) {
             $sm = $this->getServiceLocator();
@@ -164,13 +159,12 @@ class ZawodnikController extends AbstractActionController {
         return $this->KadraTable;
     }
 
+//funkcja sesja potrzebna do operacji w danym kontrolerze
     private function sesja() {
         session_start();
         if (!isset($_SESSION['id'])) {
             $_SESSION['id'] = 0;
         }
     }
-    
-
 
 }

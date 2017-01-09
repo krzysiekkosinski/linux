@@ -11,14 +11,70 @@ return array(
             'sprawozdanie' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/sprawozdanie',
+                    'route' => '/sprawozdanie[/:action][/:id][/]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Sprawozdanie\Controller\Sprawozdanie',
-                        'action' => 'index',
+                        'action' => 'lista',
+                    ),
+                ),
+            ),
+            'podglada' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/podglada[/:action][/:id][/]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Sprawozdanie\Controller\Sprawozdanie',
+                        'action' => 'podglada',
+                    ),
+                ),
+            ),
+            'podglads' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/podglads[/:action][/:id][/]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Sprawozdanie\Controller\Sprawozdanie',
+                        'action' => 'podglads',
+                    ),
+                ),
+            ),
+            'podgladd' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/podgladd[/:action][/:id][/]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Sprawozdanie\Controller\Sprawozdanie',
+                        'action' => 'podgladd',
+                    ),
+                ),
+            ),
+            'sprawozdaniePDF' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/sprawozdaniePDF',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Sprawozdanie\Controller\Sprawozdanie',
+                        'action' => 'sprawozdaniePDF',
                     ),
                 ),
             ),

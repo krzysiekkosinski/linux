@@ -47,7 +47,7 @@
             <select name="Sedzia_glowny" class="form-control">
                 <option value="---" disabled selected>---</option>
                 <?php foreach ($this->sedzia as $uzytkownik) { ?>
-                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko.' '.$uzytkownik->u_imie ?></option>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -57,7 +57,7 @@
             <select name="Sedzia_liniowy_1" class="form-control">
                 <option value="---" disabled selected>---</option>
                 <?php foreach ($this->sedzia1 as $uzytkownik) { ?>
-                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko.' '.$uzytkownik->u_imie ?></option>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -67,7 +67,7 @@
             <select name="Sedzia_liniowy_2" class="form-control">
                 <option value="---" disabled selected>---</option>
                 <?php foreach ($this->sedzia2 as $uzytkownik) { ?>
-                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko.' '.$uzytkownik->u_imie ?></option>
+                    <option value="<?= $uzytkownik->id_uzytkownik ?>"><?= $uzytkownik->u_nazwisko . ' ' . $uzytkownik->u_imie ?></option>
                 <?php } ?>
             </select>
         </div>
@@ -75,7 +75,7 @@
 
 
 
- 
+
 
         <a href="<?= $this->url('mecz', array()); ?>"><input class="btn btn-default" type="button" value="Wstecz" />
             <a href="<?= $this->url('mecz', array()); ?>"><button type="submit" class="btn btn-default">Zatwierdź</button></a>
@@ -84,81 +84,26 @@
     </form>
 </div>
 <script type="text/javascript">
-$("#date").datepicker({
-     format: 'yyyy-mm-dd',
-     autoclose: true,
-}).on('changeDate', function (ev) {
-     $(this).datepicker('hide');
-});
+    $("#date").datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+    }).on('changeDate', function (ev) {
+        $(this).datepicker('hide');
+    });
 </script>
 
 <script type="text/javascript">
-            $(function() {
-            $("#godzina").timepicker({
+    $(function () {
+        $("#godzina").timepicker({
             timeFormat: 'HH:mm ',
-                    interval: 60,
-                    minTime: '10:00',
-                    maxTime: '20:00',
-                    defaultTime: '11:00',
-                    startTime: '10:00',
-                    dynamic: false,
-                    dropdown: true,
-                    scrollbar: true
-            });
-            });</script>
+            interval: 60,
+            minTime: '10:00',
+            maxTime: '20:00',
+            defaultTime: '11:00',
+            startTime: '10:00',
+            dynamic: false,
+            dropdown: true,
+            scrollbar: true
+        });
+    });</script>
 
-<script type="text/javascript" language="javascript">
-
-//            window.onload = function (){
-//                var firstCombo = $('#cmb1');
-//                var secondCombo = $('#cmb2');
-//                var firstTeam;
-//                var secondTeam;
-//                firstCombo.on('change', function (){
-//                    if (secondTeam){
-//                        secondCombo.find('option')[secondTeam].removeAttribute('disabled');
-//                    }
-//                    var team = firstCombo.find('option:selected').val();
-//                    secondTeam = team;
-//                    secondCombo.find('option')[team].setAttribute('disabled', 'disabled');
-//                    
-//                    
-//                });
-//                secondCombo.on('change', function (){
-//                    if (firstTeam){
-//                        firstTeam.removeAttr('disabled');
-//                    }
-//                    var team = secondCombo.find('option:selected').val();
-//                    firstTeam = team;
-//                    firstCombo.find('option')[team].setAttribute('disabled', 'disabled');
-//                });
-//            };
-                
-                
-                
-                
-                
-                
-            /*$(document).ready(function(){
-                var firstCombo = $('#cmb1');
-                var secondCombo = $('#cmb2');
-                var team;
-                firstCombo.on('change', function (item){
-                    var selected = firstCombo.find('select option:selected').attr();
-                });
-    */
-            /*$("select").on("change", function(e){
-                e.preventDefault();
-                console.log($(this).val());
-            var valueSelected = $(this).val()
-            $("select option:contains('" + valueSelected + "')").prop("disabled", true);
-            */
-    //});
-    </script>
-
-<!--<script>
-            function blokada(class)
-            {
-            document.getElementsByClassName(class).setAttribute("disabled", "disabled");
-            }
-</script>-->

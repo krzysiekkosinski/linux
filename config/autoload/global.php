@@ -29,5 +29,6 @@ return array(
        'Mecz' => 'layout/layout.phtml',
            'Kadra' => 'layout/layout.phtml',
            'Zawodnik' => 'layout/layout.phtml',
+           'Sprawozdanie' => 'layout/layout.phtml',
    ),
 );

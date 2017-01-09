@@ -6,37 +6,31 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Kadra\Model\Kadra;
 
-
-
-
-
 class KadraController extends AbstractActionController {
 
-    
     protected $kadraTable;
 
-    
+//akcja odpowiedzialna za wyświetlenie listy zespołów
     public function listaAction() {
         $this->sesja();
-        //$request = $this->getRequest();
         $kadry = $this->Tabela()->wszystko(null);
 
         return new ViewModel(array(
-            'kadry' => $kadry,
-            'xxx' => $kadry->Count()));
+            'kadry' => $kadry));
     }
-     
-        public function dodajAction() {
+
+//akcja odpowiedzialna za dodanie nowego zespołu
+    public function dodajAction() {
         $this->sesja();
         $request = $this->getRequest();
         if ($request->isPost()) {
             if (empty($_POST['Nazwa_zespolu'])) {
                 echo '<div class="alert alert-danger">Nie podałeś nazwy zespołu</div>';
                 return new ViewModel();
-            } 
+            }
             $czy_jest_klub = $this->Tabela()->wszystko(array('nazwa_zespolu' => $_POST['Nazwa_zespolu']));
-        $zlicz = $czy_jest_klub->count();
-        if ($zlicz > 0) {
+            $zlicz = $czy_jest_klub->count();
+            if ($zlicz > 0) {
                 echo '<div class="alert alert-danger">Podany zespół już jest w bazie</div>';
                 return new ViewModel();
             } else {
@@ -52,7 +46,8 @@ class KadraController extends AbstractActionController {
         }
         return new ViewModel();
     }
-    
+
+//akcja odpowiedzialna za edytowanie wybranego zespołu
     public function edytujAction() {
         $this->sesja();
 
@@ -89,24 +84,24 @@ class KadraController extends AbstractActionController {
                     'nazwa_zespolu' => addslashes(htmlspecialchars($_POST['Nazwa_zespolu'])),
                 );
                 $czy_zmieniono = $this->Tabela()->wszystko(array('nazwa_zespolu' => $_POST['Nazwa_zespolu']));
-        $zlicz = $czy_zmieniono->count();
-                if ($zlicz>0||empty($_POST['Nazwa_zespolu'])) {
-                                        return $this->redirect()->toRoute('kadra', array('action' => "edytuj",'id' => $id));
-                }
-                else{
-                        $kadra = new Kadra();
-                        $kadra->exchangeArray($data);
-                        $this->Tabela()->edytuj($kadra, $id);
-                        return $this->redirect()->toRoute('kadra');
-                    }
+                $zlicz = $czy_zmieniono->count();
+                if ($zlicz > 0 || empty($_POST['Nazwa_zespolu'])) {
+                    return $this->redirect()->toRoute('kadra', array('action' => "edytuj", 'id' => $id));
+                } else {
+                    $kadra = new Kadra();
+                    $kadra->exchangeArray($data);
+                    $this->Tabela()->edytuj($kadra, $id);
+                    return $this->redirect()->toRoute('kadra');
                 }
             }
-        
+        }
+
         return new ViewModel();
     }
-    
-     public function usunAction() {
-        
+
+//akcja odpowiedzialna za usunięcie wybranego zespołu
+    public function usunAction() {
+
         $id = $this->params('id', 0);
 
         $id_array = explode(',', $id);
@@ -115,12 +110,11 @@ class KadraController extends AbstractActionController {
             $kadry = $this->Tabela()->wszystko(array('id_zespol' => $id));
 
             $this->Tabela()->usun($id);
-
         }
         return $this->redirect()->toRoute('kadra');
     }
-    
-    
+
+//funkcja dostępu do tabeli z zespołami
     public function Tabela() {
         if (!$this->KadraTable) {
             $sm = $this->getServiceLocator();
@@ -129,15 +123,10 @@ class KadraController extends AbstractActionController {
 
         return $this->KadraTable;
     }
-    
 
+//funkcja sesja potrzebna do operacji w danym kontrolerze
     private function sesja() {
         session_start();
-        if (!isset($_SESSION['id'])) {
-            $_SESSION['id'] = 0;
-        }
     }
-    
-
 
 }

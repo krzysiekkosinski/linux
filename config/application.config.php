@@ -4,7 +4,7 @@ return array(
     'modules' => array(
         'Application',
         'Sprawozdanie',
-        'Podglad',
+      //  'Podglad',
         'Mecz',
         'Kadra',
         'Zawodnik',

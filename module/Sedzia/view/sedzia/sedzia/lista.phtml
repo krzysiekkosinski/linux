@@ -4,29 +4,20 @@
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead>
-            <tr>
-            <th>Nazwisko i Imię</th>
-            <th>Funkcja</th>
-        </tr>
+                <tr>
+                    <th>Nazwisko i Imię</th>
+                    <th>Funkcja</th>
+                </tr>
             </thead>
             <?php foreach ($sedziowie as $sedzia) : ?>
-    <tr>
-        <td><?= $this->escapeHtml($sedzia->u_nazwisko) ?>&nbsp;&nbsp;<?= $this->escapeHtml($sedzia->u_imie) ?></td>
-    <td><?= $this->escapeHtml($sedzia->u_funkcja) ?></td>
-
-    </tr>
-
-<?php endforeach; ?>
-
-
-    </table>
-    
-
-        </div>
+                <tr>
+                    <td><?= $this->escapeHtml($sedzia->u_nazwisko) ?>&nbsp;&nbsp;<?= $this->escapeHtml($sedzia->u_imie) ?></td>
+                    <td><?= $this->escapeHtml($sedzia->u_funkcja) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </div>
 </div>
 
-<br/>
-<br/>
-   
-   
- 
+
+

@@ -4,45 +4,45 @@
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead>
-            <tr>
-            <th>Nazwa drużyny</th>
-            <th>Zaznacz</th>
-        </tr>
+                <tr>
+                    <th>Nazwa drużyny</th>
+                    <th>Zaznacz</th>
+                </tr>
             </thead>
             <?php foreach ($kadry as $kadra) : ?>
-    <tr>
-    <td><?= $this->escapeHtml($kadra->nazwa_zespolu) ?></td>
-     <td><input type="radio" value="<?= $this->escapeHtml($kadra->id_zespol) ?>" name="choice" /></td>
+                <tr>
+                    <td><?= $this->escapeHtml($kadra->nazwa_zespolu) ?></td>
+                    <td><input type="radio" value="<?= $this->escapeHtml($kadra->id_zespol) ?>" name="choice" /></td>
 
-    </tr>
+                </tr>
 
-<?php endforeach; ?>
+            <?php endforeach; ?>
 
 
-    </table>
-    
+        </table>
 
-        </div>
+
+    </div>
 </div>
 
 <br/>
 <br/>
 
-<a href="<?= $this->url('kadra',array('action'=>'dodaj')) ?>"><button class="btn btn-default">Nowy</button></a>&nbsp;&nbsp;
-<a id="adresEdytuj" href="<?= $this->url('kadra',array('action'=>'edytuj')); ?>"><button class="btn btn-default">Edytuj</button></a>&nbsp;&nbsp;
+<a href="<?= $this->url('kadra', array('action' => 'dodaj')) ?>" role="button" class="btn btn-default">Nowy</a>&nbsp;&nbsp;
+<a id="adresEdytuj" href="<?= $this->url('kadra', array('action' => 'edytuj')); ?>" role="button" class="btn btn-default">Edytuj</a>&nbsp;&nbsp;
 
 
-<a id="adresUsun" href="<?= $this->url('kadra',array('action'=>'usun')); ?>"><button class="btn btn-default" onclick="return confirm('Czy chcesz usunąć ten zespoł?')">Usuń</button></a>&nbsp;&nbsp;
+<a id="adresUsun" href="<?= $this->url('kadra', array('action' => 'usun')); ?>" role="button" class="btn btn-default" onclick="return confirm('Czy chcesz usunąć ten zespoł?')">Usuń</a>&nbsp;&nbsp;
 
 <br/>
 <br/>
-   
-   
+
+
 <script>
-    
-    tekstEdytuj=document.getElementById("adresEdytuj").getAttributeNode("href").value;
-    tekstUsun=document.getElementById("adresUsun").getAttributeNode("href").value;
-    
+
+    tekstEdytuj = document.getElementById("adresEdytuj").getAttributeNode("href").value;
+    tekstUsun = document.getElementById("adresUsun").getAttributeNode("href").value;
+
     function getCheckboxesValues() {
         return [].slice.apply(document.querySelectorAll("input[type=radio]"))
                 .filter(function (c) {
@@ -53,9 +53,9 @@
                 });
     }
 
-    $(document.querySelectorAll("input[type=radio]")).change(function() {
-    document.getElementById("adresEdytuj").getAttributeNode("href").value=tekstEdytuj+getCheckboxesValues();
-    document.getElementById("adresUsun").getAttributeNode("href").value=tekstUsun+getCheckboxesValues();
-});
-    
+    $(document.querySelectorAll("input[type=radio]")).change(function () {
+        document.getElementById("adresEdytuj").getAttributeNode("href").value = tekstEdytuj + getCheckboxesValues();
+        document.getElementById("adresUsun").getAttributeNode("href").value = tekstUsun + getCheckboxesValues();
+    });
+
 </script>    

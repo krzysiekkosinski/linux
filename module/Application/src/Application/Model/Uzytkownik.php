@@ -5,9 +5,9 @@ namespace Application\Model;
 use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
- 
-class Uzytkownik
-{
+
+class Uzytkownik {
+
     public $id_uzytkownik;
     public $u_imie;
     public $u_nazwisko;
@@ -16,11 +16,9 @@ class Uzytkownik
     public $u_login;
     public $u_haslo;
     public $u_mail;
-    
     protected $inputFilter;
 
-    public function exchangeArray($data)
-    {
+    public function exchangeArray($data) {
         $this->id_uzytkownik = (!empty($data['id_uzytkownik'])) ? $data['id_uzytkownik'] : null;
         $this->u_imie = (!empty($data['u_imie'])) ? $data['u_imie'] : null;
         $this->u_nazwisko = (!empty($data['u_nazwisko'])) ? $data['u_nazwisko'] : null;
@@ -30,16 +28,13 @@ class Uzytkownik
         $this->u_haslo = (!empty($data['u_haslo'])) ? $data['u_haslo'] : null;
         $this->u_mail = (!empty($data['u_mail'])) ? $data['u_mail'] : null;
     }
-    
-    public function setInputFilter(InputFilterInterface $inputFilter)
-    {
+
+    public function setInputFilter(InputFilterInterface $inputFilter) {
         throw new \Exception("Not used");
     }
-    
-    public function getInputFilter()
-    {
-        if(!$this->inputFilter)
-        {
+
+    public function getInputFilter() {
+        if (!$this->inputFilter) {
             $inputFilter = new InputFilter();
 
             $inputFilter->add(array(
@@ -56,68 +51,65 @@ class Uzytkownik
                 'name' => 'u_nazwisko',
                 'requird' => true,
                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 50,
+                        ),
+                    ),
+                ),
                 'filtres' => array(
                     array(
                         array('name' => 'StripTags'),
                         array('name' => 'StringTrim'),
                     ),
                 ),
-                
             ));
-            
+
             $inputFilter->add(array(
                 'name' => 'u_imie',
                 'requird' => true,
                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 50,
+                        ),
+                    ),
+                ),
                 'filtres' => array(
                     array(
                         array('name' => 'StripTags'),
                         array('name' => 'StringTrim'),
                     ),
                 ),
-                
             ));
-            
+
             $inputFilter->add(array(
                 'name' => 'u_funkcja',
                 'requird' => true,
                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 20,
+                        ),
+                    ),
+                ),
                 'filtres' => array(
                     array(
                         array('name' => 'StripTags'),
                         array('name' => 'StringTrim'),
                     ),
                 ),
-                
             ));
-            
+
             $inputFilter->add(array(
                 'name' => 'id_uzytkownik',
                 'requird' => true,
@@ -139,15 +131,15 @@ class Uzytkownik
                     ),
                 ),
                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 50,
+                        ),
+                    ),
+                ),
             ));
 
 
@@ -161,15 +153,15 @@ class Uzytkownik
                     ),
                 ),
                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 50,
+                        ),
+                    ),
+                ),
             ));
             $inputFilter->add(array(
                 'name' => 'u_haslo',
@@ -181,20 +173,21 @@ class Uzytkownik
                     ),
                 ),
                 'validators' => array(
-                     array(
-                         'name'    => 'StringLength',
-                         'options' => array(
-                             'encoding' => 'UTF-8',
-                             'min'      => 1,
-                             'max'      => 100,
-                         ),
-                     ),
-                 ),
+                    array(
+                        'name' => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'UTF-8',
+                            'min' => 1,
+                            'max' => 128,
+                        ),
+                    ),
+                ),
             ));
 
             $this->inputFilter = $inputFilter;
         }
-        
+
         return $this->inputFilter;
     }
+
 }
