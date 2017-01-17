@@ -206,6 +206,7 @@ class SprawozdanieController extends AbstractActionController {
                     'czerwona_kartka' => addslashes(htmlspecialchars($_POST['Czerwona_kartka'])),
                     'dodatkowe_informacje' => addslashes(htmlspecialchars($_POST['Info'])),
                 );
+
                 $sprawozdanie = new Sprawozdanie();
                 $sprawozdanie->exchangeArray($data);
                 $this->Tabela()->dodaj($sprawozdanie);
